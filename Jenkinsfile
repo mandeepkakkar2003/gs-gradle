@@ -1,16 +1,11 @@
 pipeline {
-  /* use the official Gradle image, which bundles Gradle 6.0.1 + JDK 11 */
-  agent {
-    docker {
-      image 'gradle:6.0.1-jdk11'
-      args  '-v $HOME/.gradle:/home/gradle/.gradle'
-    }
-  }
+  agent any
   stages {
     stage('Build') {
       steps {
-        /* we’re already in the workspace root; go into “complete” */
+        // go into the project folder where gradlew lives
         dir('complete') {
+          // run the wrapper directly
           sh './gradlew clean build'
         }
       }
